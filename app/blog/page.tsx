@@ -10,12 +10,16 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Calendar, Clock, User, Search, ArrowRight, ArrowLeft } from "lucide-react"
 import { useLocale } from "@/hooks/use-locale"
+import Link from "next/link"
+import { getAllArticles } from "@/lib/articles"
 
 export default function BlogPage() {
   const { locale } = useLocale()
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const ArrowIcon = locale === "ar" ? ArrowLeft : ArrowRight
+
+  const allArticles = getAllArticles()
 
   const categories = [
     { id: "all", name: locale === "ar" ? "الكل" : "All" },
@@ -25,124 +29,10 @@ export default function BlogPage() {
     { id: "criminal", name: locale === "ar" ? "الجنائي" : "Criminal" },
   ]
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: locale === "ar" ? "دليل شامل لقانون الأسرة في السعودية" : "Complete Guide to Family Law in Saudi Arabia",
-      titleAr: "دليل شامل لقانون الأسرة في السعودية",
-      titleEn: "Complete Guide to Family Law in Saudi Arabia",
-      excerpt:
-        locale === "ar"
-          ? "تعرف على أهم القوانين والإجراءات المتعلقة بقضايا الأسرة والزواج والطلاق في المملكة العربية السعودية"
-          : "Learn about the most important laws and procedures related to family, marriage, and divorce cases in Saudi Arabia",
-      excerptAr: "تعرف على أهم القوانين والإجراءات المتعلقة بقضايا الأسرة والزواج والطلاق في المملكة العربية السعودية",
-      excerptEn:
-        "Learn about the most important laws and procedures related to family, marriage, and divorce cases in Saudi Arabia",
-      category: "family",
-      date: "2024-01-15",
-      readTime: locale === "ar" ? "5 دقائق" : "5 min read",
-      author: locale === "ar" ? "المحامي أحمد الراشد" : "Lawyer Ahmed Al-Rashid",
-      image: "/placeholder.svg?height=300&width=400&text=Family+Law+Guide",
-    },
-    {
-      id: 2,
-      title: locale === "ar" ? "كيفية تأسيس شركة في السعودية" : "How to Establish a Company in Saudi Arabia",
-      titleAr: "كيفية تأسيس شركة في السعودية",
-      titleEn: "How to Establish a Company in Saudi Arabia",
-      excerpt:
-        locale === "ar"
-          ? "خطوات مفصلة لتأسيس شركة في المملكة العربية السعودية مع شرح المتطلبات القانونية والإجراءات اللازمة"
-          : "Detailed steps to establish a company in Saudi Arabia with explanation of legal requirements and necessary procedures",
-      excerptAr: "خطوات مفصلة لتأسيس شركة في المملكة العربية السعودية مع شرح المتطلبات القانونية والإجراءات اللازمة",
-      excerptEn:
-        "Detailed steps to establish a company in Saudi Arabia with explanation of legal requirements and necessary procedures",
-      category: "business",
-      date: "2024-01-10",
-      readTime: locale === "ar" ? "7 دقائق" : "7 min read",
-      author: locale === "ar" ? "المحامي أحمد الراشد" : "Lawyer Ahmed Al-Rashid",
-      image: "/placeholder.svg?height=300&width=400&text=Business+Formation",
-    },
-    {
-      id: 3,
-      title: locale === "ar" ? "حقوق المستأجر والمؤجر في القانون السعودي" : "Tenant and Landlord Rights in Saudi Law",
-      titleAr: "حقوق المستأجر والمؤجر في القانون السعودي",
-      titleEn: "Tenant and Landlord Rights in Saudi Law",
-      excerpt:
-        locale === "ar"
-          ? "دليل شامل لحقوق وواجبات المستأجر والمؤجر وفقاً لنظام الإيجار الجديد في المملكة العربية السعودية"
-          : "Comprehensive guide to tenant and landlord rights and obligations according to the new rental system in Saudi Arabia",
-      excerptAr: "دليل شامل لحقوق وواجبات المستأجر والمؤجر وفقاً لنظام الإيجار الجديد في المملكة العربية السعودية",
-      excerptEn:
-        "Comprehensive guide to tenant and landlord rights and obligations according to the new rental system in Saudi Arabia",
-      category: "real-estate",
-      date: "2024-01-05",
-      readTime: locale === "ar" ? "6 دقائق" : "6 min read",
-      author: locale === "ar" ? "المحامي أحمد الراشد" : "Lawyer Ahmed Al-Rashid",
-      image: "/placeholder.svg?height=300&width=400&text=Real+Estate+Rights",
-    },
-    {
-      id: 4,
-      title:
-        locale === "ar" ? "الدفاع في القضايا الجنائية: حقوقك وواجباتك" : "Criminal Defense: Your Rights and Duties",
-      titleAr: "الدفاع في القضايا الجنائية: حقوقك وواجباتك",
-      titleEn: "Criminal Defense: Your Rights and Duties",
-      excerpt:
-        locale === "ar"
-          ? "تعرف على حقوقك في القضايا الجنائية وكيفية التعامل مع الاتهامات الجنائية والإجراءات القانونية"
-          : "Learn about your rights in criminal cases and how to deal with criminal charges and legal procedures",
-      excerptAr: "تعرف على حقوقك في القضايا الجنائية وكيفية التعامل مع الاتهامات الجنائية والإجراءات القانونية",
-      excerptEn: "Learn about your rights in criminal cases and how to deal with criminal charges and legal procedures",
-      category: "criminal",
-      date: "2023-12-28",
-      readTime: locale === "ar" ? "8 دقائق" : "8 min read",
-      author: locale === "ar" ? "المحامي أحمد الراشد" : "Lawyer Ahmed Al-Rashid",
-      image: "/placeholder.svg?height=300&width=400&text=Criminal+Defense",
-    },
-    {
-      id: 5,
-      title:
-        locale === "ar"
-          ? "العقود التجارية: أساسيات الصياغة والمراجعة"
-          : "Commercial Contracts: Drafting and Review Basics",
-      titleAr: "العقود التجارية: أساسيات الصياغة والمراجعة",
-      titleEn: "Commercial Contracts: Drafting and Review Basics",
-      excerpt:
-        locale === "ar"
-          ? "نصائح مهمة لصياغة ومراجعة العقود التجارية لضمان حماية مصالحك التجارية والقانونية"
-          : "Important tips for drafting and reviewing commercial contracts to ensure protection of your business and legal interests",
-      excerptAr: "نصائح مهمة لصياغة ومراجعة العقود التجارية لضمان حماية مصالحك التجارية والقانونية",
-      excerptEn:
-        "Important tips for drafting and reviewing commercial contracts to ensure protection of your business and legal interests",
-      category: "business",
-      date: "2023-12-20",
-      readTime: locale === "ar" ? "6 دقائق" : "6 min read",
-      author: locale === "ar" ? "المحامي أحمد الراشد" : "Lawyer Ahmed Al-Rashid",
-      image: "/placeholder.svg?height=300&width=400&text=Contract+Drafting",
-    },
-    {
-      id: 6,
-      title:
-        locale === "ar" ? "التطورات الجديدة في قانون الاستثمار السعودي" : "New Developments in Saudi Investment Law",
-      titleAr: "التطورات الجديدة في قانون الاستثمار السعودي",
-      titleEn: "New Developments in Saudi Investment Law",
-      excerpt:
-        locale === "ar"
-          ? "آخر التحديثات والتطورات في قانون الاستثمار السعودي وتأثيرها على المستثمرين المحليين والأجانب"
-          : "Latest updates and developments in Saudi investment law and their impact on local and foreign investors",
-      excerptAr: "آخر التحديثات والتطورات في قانون الاستثمار السعودي وتأثيرها على المستثمرين المحليين والأجانب",
-      excerptEn:
-        "Latest updates and developments in Saudi investment law and their impact on local and foreign investors",
-      category: "business",
-      date: "2023-12-15",
-      readTime: locale === "ar" ? "9 دقائق" : "9 min read",
-      author: locale === "ar" ? "المحامي أحمد الراشد" : "Lawyer Ahmed Al-Rashid",
-      image: "/placeholder.svg?height=300&width=400&text=Investment+Law",
-    },
-  ]
-
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === "all" || post.category === selectedCategory
+  const filteredPosts = allArticles.filter((article) => {
+    const title = locale === "ar" ? article.titleAr : article.titleEn
+    const matchesSearch = title.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesCategory = selectedCategory === "all" || article.category === selectedCategory
     return matchesSearch && matchesCategory
   })
 
@@ -231,59 +121,61 @@ export default function BlogPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredPosts.map((post, index) => (
+                {filteredPosts.map((article, index) => (
                   <Card
-                    key={post.id}
+                    key={article.id}
                     className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-border hover:border-accent/50 overflow-hidden"
                   >
                     <div className="relative overflow-hidden">
                       <img
-                        src={post.image || "/placeholder.svg"}
-                        alt={post.title}
+                        src={article.image || "/placeholder.svg"}
+                        alt={locale === "ar" ? article.titleAr : article.titleEn}
                         className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
                         <Badge className="bg-accent text-accent-foreground">
-                          {categories.find((cat) => cat.id === post.category)?.name}
+                          {categories.find((cat) => cat.id === article.category)?.name}
                         </Badge>
                       </div>
                     </div>
 
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-semibold text-foreground group-hover:text-accent transition-colors duration-300 line-clamp-2">
-                        {post.title}
+                        {locale === "ar" ? article.titleAr : article.titleEn}
                       </CardTitle>
                       <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-4 w-4" />
-                          {formatDate(post.date)}
+                          {formatDate(article.date)}
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="h-4 w-4" />
-                          {post.readTime}
+                          {locale === "ar" ? article.readTimeAr : article.readTimeEn}
                         </div>
                       </div>
                     </CardHeader>
 
                     <CardContent className="space-y-4">
                       <CardDescription className="text-muted-foreground leading-relaxed line-clamp-3">
-                        {post.excerpt}
+                        {locale === "ar" ? article.excerptAr : article.excerptEn}
                       </CardDescription>
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <User className="h-4 w-4" />
-                          {post.author}
+                          {locale === "ar" ? article.authorAr : article.authorEn}
                         </div>
 
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-accent hover:text-accent-foreground hover:bg-accent group/btn"
-                        >
-                          {locale === "ar" ? "اقرأ المزيد" : "Read More"}
-                          <ArrowIcon className="ml-1 h-4 w-4 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 transition-transform duration-200" />
-                        </Button>
+                        <Link href={`/blog/${article.slug}`}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-accent hover:text-accent-foreground hover:bg-accent group/btn"
+                          >
+                            {locale === "ar" ? "اقرأ المزيد" : "Read More"}
+                            <ArrowIcon className="ml-1 h-4 w-4 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 transition-transform duration-200" />
+                          </Button>
+                        </Link>
                       </div>
                     </CardContent>
                   </Card>
