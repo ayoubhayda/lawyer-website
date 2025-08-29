@@ -38,6 +38,7 @@ export default function ServicesPage() {
         locale === "ar" ? "النفقة والمؤخر" : "Alimony and Deferred Dower",
         locale === "ar" ? "تقسيم الممتلكات" : "Property Division",
       ],
+      slug: "family-law",
     },
     {
       icon: Home,
@@ -52,6 +53,7 @@ export default function ServicesPage() {
         locale === "ar" ? "النزاعات العقارية" : "Real Estate Disputes",
         locale === "ar" ? "الاستثمار العقاري" : "Real Estate Investment",
       ],
+      slug: "real-estate",
     },
     {
       icon: Briefcase,
@@ -66,6 +68,7 @@ export default function ServicesPage() {
         locale === "ar" ? "النزاعات التجارية" : "Commercial Disputes",
         locale === "ar" ? "الامتثال القانوني" : "Legal Compliance",
       ],
+      slug: "business-law",
     },
     {
       icon: Shield,
@@ -80,6 +83,7 @@ export default function ServicesPage() {
         locale === "ar" ? "القضايا الجنائية العامة" : "General Criminal Cases",
         locale === "ar" ? "الاستئناف الجنائي" : "Criminal Appeals",
       ],
+      slug: "criminal-defense",
     },
     {
       icon: FileText,
@@ -94,6 +98,7 @@ export default function ServicesPage() {
         locale === "ar" ? "اتفاقيات الشراكة" : "Partnership Agreements",
         locale === "ar" ? "عقود الخدمات" : "Service Contracts",
       ],
+      slug: "contract-drafting",
     },
     {
       icon: Gavel,
@@ -108,6 +113,7 @@ export default function ServicesPage() {
         locale === "ar" ? "تنفيذ الأحكام" : "Judgment Execution",
         locale === "ar" ? "الطعون والاستئناف" : "Appeals and Challenges",
       ],
+      slug: "litigation-arbitration",
     },
   ]
 
@@ -191,8 +197,10 @@ export default function ServicesPage() {
                     </div>
 
                     <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90 group/btn">
-                      {locale === "ar" ? "احصل على استشارة" : "Get Consultation"}
-                      <ArrowIcon className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 transition-transform duration-200" />
+                      <a href={`/services/${service.slug}`} className="flex items-center justify-center w-full">
+                        {locale === "ar" ? "اعرف المزيد" : "Learn More"}
+                        <ArrowIcon className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 transition-transform duration-200" />
+                      </a>
                     </Button>
                   </CardContent>
                 </Card>
